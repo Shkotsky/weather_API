@@ -13,11 +13,10 @@
     <h2>{{ city }}</h2>
     <h3>{{ country }}</h3>
     <h3>
-      {{ textCondition
-      }}<span
-        >Wind {{ wind }}km/h <span class="dot">•</span> Humidity
-        {{ humidity }}%</span
-      >
+      {{ textCondition }}
+      <span>
+        Wind {{ wind }}km/h <span class="dot">•</span> Humidity {{ humidity }}%
+      </span>
     </h3>
     <div class="temp-wrapper">
       <img class="icon" :src="iconCondition" alt="icon-weather" />
@@ -40,8 +39,8 @@ const textCondition = ref(null);
 const iconCondition = ref("/");
 const city = ref(null);
 const country = ref(null);
-const latitude = ref(null);
-const longitude = ref(null);
+const lat = ref(null);
+const lon = ref(null);
 const location = ref(null);
 const errorMessage = ref(null);
 
@@ -49,31 +48,24 @@ const shouldUseGeolocation = () => !search.value && navigator.geolocation;
 
 const findMe = () => {
   if (shouldUseGeolocation) {
-    navigator.geolocation.getCurrentPosition(successPosition, errorPosition);
-  } else {
-    location.value = search.value;
-    getWeather();
+    navigator.geolocation.getCurrentPosition(geoPosition, geoError);
   }
 };
 
 findMe();
 
-function successPosition(position) {
-  latitude.value = position.coords.latitude;
-  longitude.value = position.coords.longitude;
-  setLocation();
+function geoPosition(position) {
+  lat.value = position.coords.latitude;
+  lon.value = position.coords.longitude;
+  setLocation(`${lat.value},${lon.value}`);
 }
 
-function errorPosition() {
-  location.value = "London";
-  getWeather();
-  console.log("Unable to retrieve your location");
+function geoError() {
+  setLocation("London");
 }
 
-const setLocation = () => {
-  location.value = search.value
-    ? search.value
-    : `${latitude.value},${longitude.value}`;
+const setLocation = (point) => {
+  location.value = search.value ? search.value : point;
   getWeather();
 };
 
