@@ -1,26 +1,29 @@
 <template>
-  <form @submit.prevent="">
-    <input
-      v-model.lazy="search"
-      placeholder="Search for a city"
-      @change="findMe"
-    />
-  </form>
-  <div v-if="errorMessage" class="error">
-    {{ errorMessage }}
-  </div>
-  <div class="card">
-    <h2>{{ city }}</h2>
-    <h3>{{ country }}</h3>
-    <h3>
-      {{ textCondition }}
-      <span>
-        Wind {{ wind }}km/h <span class="dot">•</span> Humidity {{ humidity }}%
-      </span>
-    </h3>
-    <div class="temp-wrapper">
-      <img class="icon" :src="iconCondition" alt="icon-weather" />
-      <h1>{{ temp }}°</h1>
+  <div v-if="location">
+    <form @submit.prevent="">
+      <input
+        v-model.lazy="search"
+        placeholder="Search for a city"
+        @change="findMe"
+      />
+    </form>
+    <div v-if="errorMessage" class="error">
+      {{ errorMessage }}
+    </div>
+    <div class="card">
+      <h2>{{ city }}</h2>
+      <h3>{{ country }}</h3>
+      <h3>
+        {{ textCondition }}
+        <span>
+          Wind {{ wind }}km/h <span class="dot">•</span> Humidity
+          {{ humidity }}%
+        </span>
+      </h3>
+      <div class="temp-wrapper">
+        <img class="icon" :src="iconCondition" alt="icon-weather" />
+        <h1>{{ temp }}°</h1>
+      </div>
     </div>
   </div>
 </template>
