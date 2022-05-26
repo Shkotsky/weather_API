@@ -32,7 +32,7 @@
 import axios from "axios";
 import { ref } from "@vue/reactivity";
 
-const keyAPI = import.meta.env.VITE_API_KEY;
+const keyAPI = '885071ef04cf4336bc8171930222305';
 
 const search = ref(null);
 const temp = ref(null);
